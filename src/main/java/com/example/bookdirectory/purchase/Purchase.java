@@ -22,6 +22,8 @@ public class Purchase {
    @DBRef
    private Set<Book> bookSet = new HashSet<>();
 
+   private float price;
+
     public void addRole(Book book) {
         this.bookSet.add(book);
 
@@ -57,5 +59,13 @@ public class Purchase {
 
     public void setBookSet(Set<Book> bookSet) {
         this.bookSet = bookSet;
+    }
+
+    public float getPrice() {
+        return price;
+    }
+
+    public void setPrice(float price) {
+        this.price = price;
     }
 }

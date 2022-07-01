@@ -15,8 +15,9 @@ public class PurchaseController {
 
     @PostMapping("/order-book")
     public ResponseEntity<?> orderBook(@RequestParam(name = "userId",required = true) Integer userId,
-                                       @RequestParam(name = "bookId",required = true) Integer bookId){
-        return purchaseService.orderBook(userId,bookId);
+                                       @RequestParam(name = "bookId",required = true) Integer bookId,
+                                       @RequestParam(name = "coupon",required = false) String coupon){
+        return purchaseService.orderBook(userId,bookId,coupon);
     }
 
     @GetMapping("/order-book")

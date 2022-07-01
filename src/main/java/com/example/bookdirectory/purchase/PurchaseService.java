@@ -4,5 +4,5 @@ import org.springframework.http.ResponseEntity;
 
 public interface PurchaseService {
 
-    ResponseEntity<?> orderBook(Integer userId, Integer bookId);
+    ResponseEntity<?> orderBook(Integer userId, Integer bookId,String coupon);
 }
