@@ -47,22 +47,22 @@ public class BookServiceImpl implements BookService{
 
     @Override
     public ResponseEntity<?> updateBook(Integer bookId,Book updateBookDetails) {
-        Book getById = null;
+        Map<String, Object> map = new HashMap<>();
 
         try {
-            getById = bookRepo.findById(bookId).orElseThrow();
-//            getById.setTitle(updateBookDetails.getTitle());
-//            getById.setImageUri(updateBookDetails.getImageUri());
-//            getById.setDateOfPublication(updateBookDetails.getDateOfPublication());
-//            getById.setChapter(updateBookDetails.getChapter());
-//            getById.setPrice(updateBookDetails.getPrice());
-            updateBookDetails = getById;
+            Book getById = bookRepo.findById(bookId).orElseThrow();
+            getById.setTitle(updateBookDetails.getTitle());
+            getById.setImageUri(updateBookDetails.getImageUri());
+            getById.setDateOfPublication(updateBookDetails.getDateOfPublication());
+            getById.setChapter(updateBookDetails.getChapter());
+            getById.setPrice(updateBookDetails.getPrice());
 
-             bookRepo.save(updateBookDetails);
+           final Book update = bookRepo.save(getById);
+           map.put("message","Updated Sucessfully.");
         }catch (Exception e){
             System.out.println("Error: " + e);
         }
-        return ResponseEntity.ok(updateBookDetails);
+        return ResponseEntity.ok(map);
     }
 
     @Override
