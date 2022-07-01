@@ -8,10 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -28,9 +25,9 @@ public class UserServiceImpl implements UserService{
     @Override
     public ResponseEntity<?> saveUser(Register register) {
         Map<String,String> map = new HashMap<>();
-
+        Random random = new Random();
         try {
-            register.setId(UUID.randomUUID());
+            register.setId(random.nextInt(999999));
             Role role = roleRepo.findByName("USER").orElseThrow(() -> new RuntimeException("Error: Role is not found."));
             register.addRole(role);
             register.setPassword(bCryptPasswordEncoder.encode(register.getPassword()));

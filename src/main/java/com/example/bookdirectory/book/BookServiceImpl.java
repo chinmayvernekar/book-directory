@@ -3,6 +3,7 @@ package com.example.bookdirectory.book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.webjars.NotFoundException;
 
 import java.util.*;
 
@@ -14,16 +15,16 @@ public class BookServiceImpl implements BookService{
 
     @Override
     public ResponseEntity<?> saveBook(Book book) {
-        Map<String,String> map = new HashMap<>();
+//        Map<String,String> map = new HashMap<>();
         Random random = new Random();
         try {
             book.setId(random.nextInt(9999));
             bookRepo.save(book);
-            map.put("message","Book Inserted.");
+//            map.put("message","Book Inserted.");
         }catch (Exception e){
 
         }
-        return ResponseEntity.ok(map);
+        return ResponseEntity.ok(book);
     }
 
     @Override
@@ -42,5 +43,37 @@ public class BookServiceImpl implements BookService{
             System.out.println("Error: " + e);
         }
         return ResponseEntity.ok(book);
+    }
+
+    @Override
+    public ResponseEntity<?> updateBook(Integer bookId,Book updateBookDetails) {
+        Book getById = null;
+
+        try {
+            getById = bookRepo.findById(bookId).orElseThrow();
+//            getById.setTitle(updateBookDetails.getTitle());
+//            getById.setImageUri(updateBookDetails.getImageUri());
+//            getById.setDateOfPublication(updateBookDetails.getDateOfPublication());
+//            getById.setChapter(updateBookDetails.getChapter());
+//            getById.setPrice(updateBookDetails.getPrice());
+            updateBookDetails = getById;
+
+             bookRepo.save(updateBookDetails);
+        }catch (Exception e){
+            System.out.println("Error: " + e);
+        }
+        return ResponseEntity.ok(updateBookDetails);
+    }
+
+    @Override
+    public ResponseEntity<?> deleteBook(Integer bookId) {
+        Map<String,String> map = new HashMap<>();
+        try {
+            bookRepo.deleteById(bookId);
+            map.put("message","Book with id: "+ bookId + " deleted.");
+        }catch (Exception e){
+
+        }
+        return ResponseEntity.ok(map);
     }
 }

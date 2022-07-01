@@ -21,4 +21,15 @@ public class BookController {
     public ResponseEntity<?> findBook(@RequestParam(name = "bookId",required = false) Integer bookId){
         return bookService.findBook(bookId);
     }
+
+    @PutMapping("/update-book")
+    public ResponseEntity<?> updateBook(@RequestParam(name = "bookId",required = true) Integer bookId,
+                                       @RequestBody Book updateBookDetails){
+        return bookService.updateBook(bookId,updateBookDetails);
+    }
+
+    @DeleteMapping("/delete-book")
+    public ResponseEntity<?> deleteBook(@RequestParam(name = "bookId",required = true) Integer bookId){
+        return bookService.deleteBook(bookId);
+    }
 }
